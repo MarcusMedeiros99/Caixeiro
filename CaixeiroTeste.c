@@ -9,6 +9,8 @@ typedef struct linha { //estrutura que representa uma linha de entrada do arquiv
 } LINHA;
 
 void printLinha(LINHA *l); //função para imprimir uma estrutura linha
+int fatorial (int n);
+int combinacao (int n, int p);
 
 int main () {
     LISTA* cidades = inicializa();
@@ -25,12 +27,12 @@ int main () {
 
         //CALCULA COMBINAÇÃO SEU OTÁRIO!!!!!!
         n = combinacao(n,2);
+        printf("n eh %d\n", n);
         for (int i = 0; i < n; i++) { //loop para ler as proximas n linhas
             fscanf(entrada, "%d%d%d", &(l.origem), &(l.destino), &(l.distancia) ); //armazena uma das linhas numa estrutura do tipo LINHA 
-            printLinha(&l);
-            printf("oi\n");
             insereCustos(cidades, l.origem - 1, l.destino - 1, l.distancia); //insere, na estrutura de dados, a distancia de origem até destino
-            //imprimeLista(cidades);
+            imprimeLista(cidades);
+            printf("oi\n");
         }
     }
 
@@ -51,5 +53,5 @@ int fatorial (int n) {
 }
 
 int combinacao (int n, int p) { //Cn,p
-    return factorial(n) / (factorial(p) * factorial(n - p));
+    return fatorial(n) / (fatorial(p) * fatorial(n - p));
 }
