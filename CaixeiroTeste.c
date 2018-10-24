@@ -24,6 +24,7 @@ int main () {
         printf("%d\n", n);
 
         //CALCULA COMBINAÇÃO SEU OTÁRIO!!!!!!
+        n = combinacao(n,2);
         for (int i = 0; i < n; i++) { //loop para ler as proximas n linhas
             fscanf(entrada, "%d%d%d", &(l.origem), &(l.destino), &(l.distancia) ); //armazena uma das linhas numa estrutura do tipo LINHA 
             printLinha(&l);
@@ -39,4 +40,16 @@ int main () {
 
 void printLinha(LINHA *l) {
     printf("%d %d %d\n", l->origem, l->destino, l->distancia);
+}
+
+int fatorial (int n) {
+    int aux = 1;
+    for (int i = 1; i <=n; i++) {
+        aux = aux*i;
+    }
+    return aux;
+}
+
+int combinacao (int n, int p) { //Cn,p
+    return factorial(n) / (factorial(p) * factorial(n - p));
 }
