@@ -6,18 +6,13 @@
 
 //estrutura das cidades
 typedef struct cidadeij {
-    /*union {
-        int distancia; //distancia da cidade i até a j. Se distancia = 0, esse elemento é uma lista;
-        struct cidadeij* abaixo;
-    }*/
     int **custos;
 } CIDADEIJ;
 
 //estrutura da lista
 typedef struct lista {
-    //CIDADEIJ* inicio;
-    int ** custos;
-    int tamanho;
+    int **inicio;
+    int ordem; //uma matriz n por n é de ordem n
 } LISTA;
 
 //inicializa a lista, colocando valor NULL no seu inicio
@@ -26,42 +21,45 @@ LISTA* inicializa() {
 
     if (new != NULL) {
         new->inicio = NULL;
-        new->tamanho = 0;
+        new->ordem = 0;
     }
 
     return new;
 }
 
 int isEmpty(LISTA* l) {
-    return l->tamanho == 0;
+    return l->ordem == 0;
 }
 
 int insereCidades(LISTA* l,int n) {
-    l->inicio = (CIDADEIJ *)malloc( (n - 1)  * sizeof(CIDADEIJ));
+    l->inicio = (int **)malloc( n * sizeof(int *)); //se for matriz, coloca n
     if (l->inicio != NULL) {
-        l->tamanho = n;
-        for (int i = 0; i < n - 1; i++) {
-            //(l->inicio)[i].distancia = 0;
-            (l->inicio)[i].abaixo =  malloc((n - 1 - i)  * sizeof(CIDADEIJ)); //pq tinha warning???
-            if (l->inicio[i].abaixo != NULL) return FALSE;
+        l->ordem = n;
+        for (int i = 0; i < n; i++) {
+            (l->inicio)[i] = (int *)  malloc( n * sizeof(int)); 
+            if (l->inicio[i] == NULL) return FALSE;
+            
         }
         return TRUE;
     }
     return TRUE;
 }
 int insereCustos(LISTA* l, int i, int j, int d) {
-    l->inicio[i].abaixo[j].distancia  = d;
+    l->inicio[i][j]  = d;
+    l->inicio[j][i] = d;
     return TRUE;
 }
 
 void imprimeIJ (LISTA* l, int i, int j) {
-    printf("%d", l->inicio[i].abaixo[i].distancia);
+    printf("%d ", l->inicio[i][j]);
 }
 
 void imprimeLista (LISTA* l) {
-    for (int i = 0; i < l->tamanho - 1; i++) {
-        for (int j = 0; j < l->tamanho - 1; j++) {
+    for (int i = 0; i < l->ordem; i++) {
+        for (int j = 0; j < l->ordem; j++) {
             imprimeIJ(l, i, j);
+            
         }
+        printf("\n");
     }
 }
