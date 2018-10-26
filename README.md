@@ -21,7 +21,8 @@ Deixe todos os arquivos numa pasta só.
 No terminal abra a pasta que contém os arquivos.
 
 Insira os comandos
-    sudo chmod 777 comandos.sh
-    ./comandos.sh
+
+sudo chmod 777 comandos.sh   
+./comandos.sh
     
 Para executar o programa digite "./CaixeiroTeste" e insira a cidade inicial depois.
