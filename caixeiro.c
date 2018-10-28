@@ -4,10 +4,11 @@ utilizando método de força bruta
 Autores:
 Marcus Vinícius Medeiros Pará
 Mateus
-Francisco
+Francisco Mattos Fortes
 */
 
 #include <malloc.h>
+#include <limits.h>
 
 #define TRUE 1
 #define FALSE 0
@@ -157,5 +158,30 @@ void minCusto(LISTA* l, int vetor[], int inf, int sup, int *custo, int **resp)
             troca(vetor, inf, i); 
         }
     }
+}
+
+//A função vizinhoProx() calcula o custo do caminho a partir da origem
+//Buscando sempre o proximo no mais proximo
+void vizinhoProx(LISTA* l, int vetor[], int inf, int sup, int *custo, int **resp) {
+	int i, j;
+	int aux, maisprox;
+	int menor;
+	*custo = 0;
+	
+	while(inf <= sup) {
+		menor = INT_MAX;
+		for(i = inf; i <= sup; i++) {
+			aux = consulta(l, vetor[inf-1] - 1, vetor[i] - 1);
+			if(aux < menor) {
+				menor = aux;
+				maisprox = i;
+			}
+		}
+		troca(vetor, inf, maisprox);
+		*custo += menor;
+		inf++;
+	}
+	*custo += consulta(l, vetor[sup] - 1, vetor[0] - 1);
+	*resp = copyInt(vetor, sup + 1);
 }
 //FIM - CÁLCULO DO MENOR CUSTO E AUXILIARES
