@@ -64,23 +64,23 @@ basicstyle=\ttfamily\small,
 	\section{Introdução}
 	
 	
-	Problemas de otimização são modelos matemáticos que consistem encontrar um soluções que obedeçam um conjunto de restrições e que tornem um determinada função, nesse conjunto solução, máxima ou mínima. O domínio da função objetivo é $( x_1 x_2 ... x_n)^T \in R^n$, onde $n$ é a quantidade de variáveis envolvidas; e as soluções que obedecem às restrições são chamadas de soluções factíveis.
+	Problemas de otimização são modelos matemáticos cujo objetivo é encontrar soluções que obedeçam um conjunto de restrições e que tornem um determinada função, nesse conjunto solução, máxima ou mínima. O domínio da função objetivo é $( x_1 x_2 ... x_n)^T \in R^n$, onde $n$ é a quantidade de variáveis envolvidas; e as soluções que obedecem às restrições são chamadas de soluções factíveis.
 	
-	Nesse trabalho, será abordada a classe de problemas de otimização conhecida como problemas de caixeiro viajante, cuja descrição é dada na seção \ref{sec:description}. Para resolvê-lo, iremos usar a abordagem de força bruta, que não é a solução usual, por ser menos eficiente na maioria dos casos. No entanto, o objetivo principal desse trabalho é implementar uma estrutura de dados que se adeque à formulação do problema dado e permita que as operações necessárias sejam realizadas de forma eficiente. É válido notar que, mesmo quando as operações sobre os dados podem ser realizadas eficientemente, não necessariamente o problema é resolvido de forma eficiente.
+	Nesse trabalho, será abordada a classe de problemas de otimização conhecida como problemas de caixeiro viajante, cuja descrição é dada na seção \ref{sec:description}. Para resolvê-lo, iremos usar a abordagem de força bruta, que não é a solução usual, por ser menos eficiente na maioria dos casos. No entanto, o objetivo principal desse trabalho é implementar uma estrutura de dados que se adeque à formulação do problema dado e permita que as operações necessárias sejam realizadas de forma eficiente. É válido notar que, mesmo quando as operações sobre os dados são realizadas eficientemente, não necessariamente o problema é resolvido de forma eficiente.
 		
 	\section{Abordagens de força bruta}
 	
-	Uma das alternativas para resolver problemas de otimização é calcular o valor da função objetivo para todas as soluções factíveis e escolher a solução em que a função objetivo tenha o menor valor possível. Abordagens desse tipo, que buscam todas as soluções factíveis, são chamadas de força bruta e avaliadas como completas e ótimas. Na seção \ref{sec:modelagem}, será analisado o desempenho desse tipo de abordagem para o problema em questão.
+	Uma das alternativas para resolver problemas de otimização é calcular o valor da função objetivo para todas as soluções factíveis e escolher a solução em que a função objetivo tenha o menor valor possível. Abordagens desse tipo, que buscam todas as soluções factíveis, são chamadas de força bruta. Na seção \ref{sec:modelagem}, será analisado o desempenho desse tipo de abordagem para o problema em questão.
 
 	\section{Problemas de caixeiro viajante} \label{sec:description}
 	A classe de problemas do caixeiro-viajante é um conjunto de problemas clássicos na área de otimização não-linear cujo estudo foi importante no desenvolvimento de soluções de problemas envolvendo grafos. Originalmente, envolve um caixeiro-viajante que tem o objetivo de visitar um conjunto de cidades percorrendo a menor distância possível. Três restrições são impostas: o caixeiro não pode passar pela mesma cidade duas vezes, deve visitar todas as cidades, e deve finalizar seu percurso na mesma cidade em que começou.
 	
 	\section{Modelagem do problema} \label{sec:modelagem}
-	Para a modelagem do problema, podemos enumerar as cidades de $1$ a $n$ e definir distância para ir da cidade $i$ até a cidade $j$ como $c_{ij}$. É lógico que $c_{ij} = c_{ji}$, pois dadas duas cidades, a distância de $i$ até $j$ é a mesma de $j$ para $i$. Além disso, para simlificação do problema, iremos supor que podemos viajar de qualquer cidade para qualquer cidade, ou seja $\exists c_{ij} \geq 0, \forall i \neq j$ e $i,j \in {1, ..., n}$.
+	Para a modelagem do problema, podemos enumerar as cidades de $1$ a $n$ e definir distância para ir da cidade $i$ até a cidade $j$ como $c_{ij}$. É lógico que $c_{ij} = c_{ji}$, pois dadas duas cidades, a distância de $i$ até $j$ é a mesma de $j$ para $i$. Além disso, para simplificação do problema, iremos supor que podemos viajar de qualquer cidade para qualquer cidade, ou seja $\exists c_{ij} \geq 0, \forall i \neq j$ e $i,j \in {1, ..., n}$.
 	
 	Notemos que a quantidade de cidades é conhecida de antemão, e que, se conhecermos $c_{ij}$, também conhecemos $c_{ji}$. Portanto, podemos inferir que uma solução adequada pode ser sequencial dinâmica, para alocarmos em tempo de execução a memória necessária. Também, não é necessário armazernar $c_{ij}$ ao mesmo tempo que $c_{ji}$, o que permite a economia de memória. O acesso a determinada cidade é a operação mais frequente, enquanto a inserção é realizada apenas no início do problema e remoções só ocorrem ao fim.
 	
-	Com essas informações, podemos descrever o conjunto de cidades por uma lista sequencial, em que o i-ésimo cada elemento representa a cidade $i$. Cada elemento $i$ também contém uma lista, em que o seu j-ésimo elemento representa a distância até a cidade $j$. A figura \ref{lista_gen} ilustra esse modelo.
+	Com essas informações, podemos descrever o conjunto de cidades por uma lista sequencial, em que o i-ésimo cada elemento representa a cidade $i$. Cada elemento $i$ também contém uma lista, em que o seu j-ésimo elemento representa a distância até a cidade $j + i$. A figura \ref{lista_gen} ilustra esse modelo.
 	
 	\begin{figure}[!h]
 		\centering
@@ -109,7 +109,7 @@ basicstyle=\ttfamily\small,
 		\textbf{Para} $i \in \{inferior,...,superior\}$ \\
 			\quad troca($vetor[inferior]$, $vetor[i]$)\;
 			\quad permuta($vetor$, $inferior + 1$, $superior$)\;
-			\quad {5 mm} troca($vetor[inferior]$, $vetor[i]$)\;
+			\quad troca($vetor[inferior]$, $vetor[i]$)\;
 		\textbf{fim}\;
 	}
 	
@@ -118,7 +118,7 @@ basicstyle=\ttfamily\small,
 	
 	Para calcularmos a sua complexidade, podemos notar que a cada chamada recursiva, ele realiza um loop de $n - 1$ passos, onde o $n$ é o tamanho do vetor desde a posição $inferior$ até $superior$ e é decrementado a cada iteração. E, toda vez que chega à condição de parada, é necessário calcular o custo do vetor, que é uma operação $O(n)$. Então, são realizadas $O(n!)$ chamadas recursivas e cada uma delas implica em $O(n)$ operações para calcular o custo do vetor. Portanto, o algoritmo de permutação, em conjunto com o cálculo dos custos de cada vetor é $O(n \cdot n!)$.
 	
-	Na prática, ainda temos que armazenar a solução com menor custo e seu respectivo custo. No pior caso, as soluções são verificadas em ordem decrescente de custo e devemos trocar o vetor armazenado sempre. A cópia de um vetor em C foi implementada copiando elemento a elemento, o que é $O(n)$. Isso torna a ordem do algoritmo realizado no fim das chamadas recursivas $O(2n) = O(n)$. A complexidade não é alterada, mas o fim da recursão leva o dobro de passos. 
+	Na prática, ainda temos que armazenar a solução com menor custo e seu respectivo custo. No pior caso, as soluções são verificadas em ordem decrescente de custo e devemos trocar o vetor armazenado sempre. A cópia de um vetor em C foi implementada copiando elemento a elemento, o que é $O(n)$. Isso torna a ordem do algoritmo realizado no fim das chamadas recursivas $O(2n) = O(n)$. A complexidade não é alterada, mas o algoritmo leva o dobro de passos.  
 	
 	\subsection{Detalhes sobre a implementação}
 		
@@ -129,7 +129,7 @@ basicstyle=\ttfamily\small,
   $ gcc -g -c caixeiro.c -o  caixeiro.o
   $ gcc -g -c combinatoria.c -o combinatoria.o
   $ gcc CaixeiroTeste.o caixeiro.o combinatoria.o -o CaixeiroTeste
-  $ gcc ./CaixeiroTeste seu_arquivo.txt
+  $ ./CaixeiroTeste seu_arquivo.txt
 	\end{lstlisting}
 		
 	\section{Tempo de execução}
@@ -162,12 +162,12 @@ basicstyle=\ttfamily\small,
 	
 	\end{flushleft}
 	
-	\section{Abordagem mais eficiente}
+	\section{Alternativa: Vizinho Mais Próximo}
 	
 	Portanto, como foi possível comprovar nesse trabalho, a abordagem de força bruta não é eficiente no caso geral. Visto que gera uma explosão combinatorial no tempo gasto para resolução do problema. O que é inviável na maioria das aplicações práticas. A fim de superar essa limitação, é comum a utilização de heurísticas que direcionem a busca das soluções factíveis, em vez da realização da busca por todas as soluções.
 	
 	Uma heurística bastante utilizada para a classe de problemas do caixeiro-viajante é a do vizinho mais próximo. Essa abordagem consiste em, a partir de uma cidade, selecionar como próxima cidade do caminho a que ainda não fora visitada e que estiver à menor distância. Assim, esse procedimento é avaliado como completo e, embora não ótimo - pois encontra uma solução aproximada, que pode não ser a de custo mínimo global -, interessante devido a redução significativa na complexidade computacional.
 	
-	Para analisarmos a sua complexidade, deve-se notar que, para visitar n cidades e voltar ao início, o caixeiro deverá tomar n-1 decisões de qual a próxima cidade a ser visitada e então voltar a cidade inicial. E, a cada tomada de decisão i, o caixeiro compara as n-i opções que ainda tem para visitar. Assim, são realizados n-1 vezes n passos na resolução do problema. O que resulta em uma complexidade computacional O(n^2).
+	Para analisarmos a sua complexidade, deve-se notar que, para visitar n cidades e voltar ao início, o caixeiro deverá tomar n-1 decisões de qual a próxima cidade a ser visitada e então voltar a cidade inicial. E, a cada tomada de decisão i, o caixeiro compara as n-i opções que ainda tem para visitar. Assim, são realizados n-1 vezes n passos na resolução do problema. O que resulta em uma complexidade computacional $O(n^2)$.
 	
 \end{document}
