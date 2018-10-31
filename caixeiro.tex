@@ -168,6 +168,7 @@ basicstyle=\ttfamily\small,
 	
 	Uma heurística bastante utilizada para a classe de problemas do caixeiro-viajante é a do vizinho mais próximo. Essa abordagem consiste em, a partir de uma cidade, selecionar como próxima cidade do caminho a que ainda não fora visitada e que estiver à menor distância. Assim, esse procedimento é avaliado como completo e, embora não ótimo - pois encontra uma solução aproximada, que pode não ser a de custo mínimo global -, interessante devido a redução significativa na complexidade computacional.
 	
-	Para analisarmos a sua complexidade, deve-se notar que, para visitar n cidades e voltar ao início, o caixeiro deverá tomar n-1 decisões de qual a próxima cidade a ser visitada e então voltar a cidade inicial. E, a cada tomada de decisão i, o caixeiro compara as n-i opções que ainda tem para visitar. Assim, são realizados n-1 vezes n passos na resolução do problema. O que resulta em uma complexidade computacional $O(n^2)$.
+	Para analisarmos a sua complexidade, deve-se notar que, para visitar n cidades e voltar ao início, o caixeiro deverá tomar $n-1$ decisões de qual a próxima cidade a ser visitada e então voltar a cidade inicial. E, a cada tomada de decisão $i$, o caixeiro compara as $n-i$ opções que ainda tem para visitar. Assim, são realizados $n-1$ vezes n passos na resolução do problema. O que resulta em uma complexidade computacional $O(n^2)$.\footnote{Veja como utilizar o vizinho mais próximo no programa na seção \ref{subsec:implementacao}}
+
 	
 \end{document}
