@@ -25,7 +25,7 @@
 basicstyle=\ttfamily\small, 
 }
 \usepackage{pgfplots} %graficos
-\pgfplotsset{width = 7cm, compat = 1.9}
+\pgfplotsset{width = 5cm, height = 4.5cm, compat = 1.9}
 \date{2018}
 \doublespacing
 \begin{document}
@@ -41,11 +41,11 @@ basicstyle=\ttfamily\small,
 			\end{minipage}
 			\\[6.7 cm]
 			\begin{center}
-			ABORDAGEM DE FORÇA BRUTA PARA O PROBLEMA DO CAIXEIRO VIAJANTE\\[5 cm]
+			TÉCNICAS DE RESOLUÇÃO DO PROBLEMA DO CAIXEIRO VIAJANTE\\[5 cm]
 			\end{center}
 			\begin{flushleft}
 				
-				MATHEUS DE CASTRO SINISCARCHIO - \\
+				MATHEUS DE CASTRO SINISCARCHIO - 10857130\\
 				MARCUS VINÍCIUS MEDEIROS PARÁ - 11031663\\
 				FRANCISCO MATTOS FORTES - 4590431\\ \vspace{\fill}
 			\end{flushleft}
@@ -84,7 +84,7 @@ basicstyle=\ttfamily\small,
 	
 	\begin{figure}[!h]
 		\centering
-		\includegraphics[scale=0.45]{lista_gen.jpg}
+		\includegraphics[scale=0.40]{lista_gen.jpg}
 		\caption{Representação gráfica de uma lista generalizada sequencial.}
 		\label{lista_gen}
 	\end{figure}
@@ -118,25 +118,27 @@ basicstyle=\ttfamily\small,
 	
 	Para calcularmos a sua complexidade, podemos notar que a cada chamada recursiva, ele realiza um loop de $n - 1$ passos, onde o $n$ é o tamanho do vetor desde a posição $inferior$ até $superior$ e é decrementado a cada iteração. E, toda vez que chega à condição de parada, é necessário calcular o custo do vetor, que é uma operação $O(n)$. Então, são realizadas $O(n!)$ chamadas recursivas e cada uma delas implica em $O(n)$ operações para calcular o custo do vetor. Portanto, o algoritmo de permutação, em conjunto com o cálculo dos custos de cada vetor é $O(n \cdot n!)$.
 	
-	Na prática, ainda temos que armazenar a solução com menor custo e seu respectivo custo. No pior caso, as soluções são verificadas em ordem decrescente de custo e devemos trocar o vetor armazenado sempre. A cópia de um vetor em C foi implementada copiando elemento a elemento, o que é $O(n)$. Isso torna a ordem do algoritmo realizado no fim das chamadas recursivas $O(2n) = O(n)$. A complexidade não é alterada, mas o algoritmo leva o dobro de passos.  
+	Na prática, ainda temos que armazenar a solução com menor custo e seu respectivo custo. No pior caso, as soluções são verificadas em ordem decrescente de custo e devemos trocar o vetor armazenado sempre. A cópia de um vetor em C foi implementada copiando elemento a elemento, o que é $O(n)$. Isso torna a ordem do algoritmo realizado no fim das chamadas recursivas $O(2n) = O(n)$. A complexidade não é alterada, mas o algoritmo leva o dobro de passos. 
 	
-	\subsection{Detalhes sobre a implementação}
+	\subsection{Detalhes sobre a implementação}\label{subsec:implementacao}
 		
-		O algoritmo foi implementado em C e compilado com o gcc 7.3.0 (Ubuntu 18.04).	O arquivo principal é o "CaixeiroTeste.c". Os headers criados foram "caixeiro.h" e "combinatoria.h". Os arquivos que contém a implentação das funções utilizadas são "caixeiro.c" e "combinatoria.c". Para a compilação, foram utilizados os seguintes comandos:
+		O algoritmo foi implementado em C e compilado com o gcc 7.3.0 (Ubuntu 18.04).	O arquivo principal é o "CaixeiroTeste.c". Os headers utilizados foram "caixeiro.h" e "combinatoria.h". Os arquivos que contém os detalhes das funções utilizadas são "caixeiro.c" e "combinatoria.c".\footnote{Todos os arquivos estão no escaninho do Marcus Vinícius} Para a compilação, foram utilizados os seguintes comandos no terminal:
 		
 	\begin{lstlisting}[language=bash]
   $ gcc -g -c CaixeiroTeste.c -o CaixeiroTeste.o
   $ gcc -g -c caixeiro.c -o  caixeiro.o
   $ gcc -g -c combinatoria.c -o combinatoria.o
   $ gcc CaixeiroTeste.o caixeiro.o combinatoria.o -o CaixeiroTeste
-  $ ./CaixeiroTeste seu_arquivo.txt
+  $ ./CaixeiroTeste seu_arquivo.txt op
 	\end{lstlisting}
 		
+	O programa CaixeiroTeste recebe no mínimo um argumento na linha de comando, que é o arquivo contendo as cidades. O segundo argumento é opcional, que deve ser o número 1, caso a abordagem utilizada seja a força bruta; ou o número 2, se a abordagem for do vizinho mais próximo \footnote{Método comentado na seção \ref{sec:bonus}}.
+	
 	\section{Tempo de execução}
 	
 	Em testes, foi medido o tempo de execução do algoritmo utilizado para calcular o menor custo com auxílio da biblioteca \textit{time.h} . Abaixo, seguem os gráficos descrevendo a medição do tempo em função da quantidade de cidades do problema. À esquerda temos medições de 4 até 7 cidades, e à direita, de 4 até 10 cidades.
 	
-\begin{flushleft}	
+%\begin{flushleft}	
 	\begin{tikzpicture}
 	
 	
@@ -148,7 +150,7 @@ basicstyle=\ttfamily\small,
 		\addplot plot coordinates{(4,0.181) (5, 0.138) (6, 0.200) (7, 0.426) };
 		
 	\end{axis}
-	\hskip 230pt
+	\hskip 210pt
 	\begin{axis}[
 		axis lines = left,
 		xlabel = $n$,
@@ -160,9 +162,9 @@ basicstyle=\ttfamily\small,
 	
 	\end{tikzpicture}
 	
-	\end{flushleft}
+	%\end{flushleft}
 	
-	\section{Alternativa: Vizinho Mais Próximo}
+	\section{Alternativa: Vizinho Mais Próximo} \label{sec:bonus}
 	
 	Como foi possível comprovar nesse trabalho, a abordagem de força bruta não é eficiente no caso geral. Visto que gera uma explosão combinatorial no tempo gasto para resolução do problema. O que é inviável na maioria das aplicações práticas. A fim de superar essa limitação, é comum a utilização de heurísticas que direcionem a busca das soluções factíveis, em vez da realização da busca por todas as soluções.
 	
@@ -170,5 +172,4 @@ basicstyle=\ttfamily\small,
 	
 	Para analisarmos a sua complexidade, deve-se notar que, para visitar n cidades e voltar ao início, o caixeiro deverá tomar $n-1$ decisões de qual a próxima cidade a ser visitada e então voltar a cidade inicial. E, a cada tomada de decisão $i$, o caixeiro compara as $n-i$ opções que ainda tem para visitar. Assim, são realizados $n-1$ vezes n passos na resolução do problema. O que resulta em uma complexidade computacional $O(n^2)$.\footnote{Veja como utilizar o vizinho mais próximo no programa na seção \ref{subsec:implementacao}}
 
-	
 \end{document}
