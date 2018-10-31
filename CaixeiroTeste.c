@@ -47,17 +47,21 @@ int main (int argc, char* argv[ ]) {
 
     //INICIO - CÁLCULO DOS CUSTOS DE CADA PERCURSO COMPLETO
     int custoMin = INT_MAX; //Esse é o valor do maior inteiro em C, o que garante que ele será substituído na primeira iteração
-    int inicio;
+    int inicio, op;
+    printf("Digite a cidade de origem: ");
     scanf("%d", &inicio);//leitura da cidade inicial
+    printf("Qual metodo deseja utilizar?\n(1) Forca bruta;\n(2) Vizinho mais proximo.\nDigite o numero correspondente: ");
+    scanf("%d", &op);
     int *vetorCidades = initVetor(n, inicio); //inicializa um vetor com as cidades, cujo primeiro elemento é a cidade inicial
     int *resp;
-    minCusto(cidades, vetorCidades, 1, n - 1, &custoMin, &resp);
+    if(op == 1) minCusto(cidades, vetorCidades, 1, n - 1, &custoMin, &resp);
+    else if(op == 2) vizinhoProx(cidades, vetorCidades, 1, n - 1, &custoMin, &resp);
     clear(&cidades);
     //FIM - CÁLCULO DOS CUSTOS DE CADA PERCURSO COMPLETO
 
     //INICIO -  EXBIÇÂO DO MENOR CUSTO E MENOR CAMINHO
-    printf("custo min: %d\n", custoMin);
-    printf("caminho: ");
+    printf("Custo min: %d\n", custoMin);
+    printf("Caminho: ");
     for (int i = 0; i < n; i++) {
         printf("%d ", resp[i]);
     }
