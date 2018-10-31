@@ -47,7 +47,7 @@ basicstyle=\ttfamily\small,
 				
 				MATHEUS DE CASTRO SINISCARCHIO - \\
 				MARCUS VINÍCIUS MEDEIROS PARÁ - 11031663\\
-				FRANCISCO ALGUMA COISA - \\ \vspace{\fill}
+				FRANCISCO MATTOS FORTES - 4590431\\ \vspace{\fill}
 			\end{flushleft}
 		\begin{center}
 			SÃO CARLOS/SP\\2018/01
@@ -70,7 +70,7 @@ basicstyle=\ttfamily\small,
 		
 	\section{Abordagens de força bruta}
 	
-	Uma das alternativas para resolver problemas de otimização é calcular o valor da função objetivo para todas as soluções factíveis e escolher a solução em que a função objetivo tenha o menor valor possível. Abordagens desse tipo, que buscam todas as soluções factíveis, são chamadas de força bruta. Na seção \ref{sec:modelagem}, será analisado o desempenho desse tipo de abordagem para o problema em questão.
+	Uma das alternativas para resolver problemas de otimização é calcular o valor da função objetivo para todas as soluções factíveis e escolher a solução em que a função objetivo tenha o menor valor possível. Abordagens desse tipo, que buscam todas as soluções factíveis, são chamadas de força bruta e avaliadas como completas e ótimas. Na seção \ref{sec:modelagem}, será analisado o desempenho desse tipo de abordagem para o problema em questão.
 
 	\section{Problemas de caixeiro viajante} \label{sec:description}
 	A classe de problemas do caixeiro-viajante é um conjunto de problemas clássicos na área de otimização não-linear cujo estudo foi importante no desenvolvimento de soluções de problemas envolvendo grafos. Originalmente, envolve um caixeiro-viajante que tem o objetivo de visitar um conjunto de cidades percorrendo a menor distância possível. Três restrições são impostas: o caixeiro não pode passar pela mesma cidade duas vezes, deve visitar todas as cidades, e deve finalizar seu percurso na mesma cidade em que começou.
@@ -161,5 +161,13 @@ basicstyle=\ttfamily\small,
 	\end{tikzpicture}
 	
 	\end{flushleft}
+	
+	\section{Abordagem mais eficiente}
+	
+	Portanto, como foi possível comprovar nesse trabalho, a abordagem de força bruta não é eficiente no caso geral. Visto que gera uma explosão combinatorial no tempo gasto para resolução do problema. O que é inviável na maioria das aplicações práticas. A fim de superar essa limitação, é comum a utilização de heurísticas que direcionem a busca das soluções factíveis, em vez da realização da busca por todas as soluções.
+	
+	Uma heurística bastante utilizada para a classe de problemas do caixeiro-viajante é a do vizinho mais próximo. Essa abordagem consiste em, a partir de uma cidade, selecionar como próxima cidade do caminho a que ainda não fora visitada e que estiver à menor distância. Assim, esse procedimento é avaliado como completo e, embora não ótimo - pois encontra uma solução aproximada, que pode não ser a de custo mínimo global -, interessante devido a redução significativa na complexidade computacional.
+	
+	Para analisarmos a sua complexidade, deve-se notar que, para visitar n cidades e voltar ao início, o caixeiro deverá tomar n-1 decisões de qual a próxima cidade a ser visitada e então voltar a cidade inicial. E, a cada tomada de decisão i, o caixeiro compara as n-i opções que ainda tem para visitar. Assim, são realizados n-1 vezes n passos na resolução do problema. O que resulta em uma complexidade computacional O(n^2).
 	
 \end{document}
