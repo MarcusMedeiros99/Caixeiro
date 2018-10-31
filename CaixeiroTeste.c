@@ -1,5 +1,3 @@
-
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <limits.h> //contém a constante INT_MAX
@@ -15,7 +13,7 @@ typedef struct linha { //estrutura que representa uma linha de entrada do arquiv
 
 void printLinha(LINHA *l);
 
-int main (int argc, char* argv[ ]) {
+int main (int argc, char* argv[]) {
     LISTA* cidades = inicializa();
     int n; //recebe a quantidade de linhas a ser lida
     LINHA l; //variável que armazena temporariamente uma linha lida
@@ -47,11 +45,11 @@ int main (int argc, char* argv[ ]) {
 
     //INICIO - CÁLCULO DOS CUSTOS DE CADA PERCURSO COMPLETO
     int custoMin = INT_MAX; //Esse é o valor do maior inteiro em C, o que garante que ele será substituído na primeira iteração
-    int inicio, op;
+    int inicio, op;//op indica se será utilizado método força bruta ou vizinho mais próximo
     printf("Digite a cidade de origem: ");
     scanf("%d", &inicio);//leitura da cidade inicial
-    printf("Qual metodo deseja utilizar?\n(1) Forca bruta;\n(2) Vizinho mais proximo.\nDigite o numero correspondente: ");
-    scanf("%d", &op);
+    if (argc == 3) op = atoi(argv[2]);
+    else op = 1;
     int *vetorCidades = initVetor(n, inicio); //inicializa um vetor com as cidades, cujo primeiro elemento é a cidade inicial
     int *resp;
     if(op == 1) minCusto(cidades, vetorCidades, 1, n - 1, &custoMin, &resp);
