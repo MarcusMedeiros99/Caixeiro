@@ -14,4 +14,5 @@ void imprimeLista(LISTA* l);
 int calculaCusto(LISTA* l, int* vet, int n);
 int consulta(LISTA* l, int i, int j);
 void minCusto(LISTA* l, int vetor[], int inf, int sup, int *custo, int **resp);
+void vizinhoProx(LISTA* l, int vetor[], int inf, int sup, int *custo, int **resp);
 void clear(LISTA** l);
