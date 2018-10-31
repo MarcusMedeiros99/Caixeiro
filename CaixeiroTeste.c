@@ -13,6 +13,10 @@ typedef struct linha { //estrutura que representa uma linha de entrada do arquiv
 
 void printLinha(LINHA *l);
 
+
+//main recebe dois argunmentos: o primeiro (obrigatorio) é o arqvuivo contendo os dados
+//o segundo (opcional) seleciona a abordagem por força bruta ou vizinho mais próximo
+// por default, a opção de força bruta é utilizada
 int main (int argc, char* argv[]) {
     LISTA* cidades = inicializa();
     int n; //recebe a quantidade de linhas a ser lida
@@ -73,3 +77,4 @@ int main (int argc, char* argv[]) {
 void printLinha(LINHA *l) {
     printf("%d %d %d\n", l->origem, l->destino, l->distancia);
 }
+
